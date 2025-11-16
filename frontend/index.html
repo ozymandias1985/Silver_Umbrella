@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Silver Umbrella - Protect yourself from phishing scams. Check if a website is safe before clicking.">
+    <title>Silver Umbrella - Online Safety Protection</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" role="banner">
+        <div class="container">
+            <div class="logo">
+                <svg class="logo-icon" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M24 4L6 14V22C6 33 13 43 24 46C35 43 42 33 42 22V14L24 4Z" fill="#2563EB"/>
+                    <path d="M24 12L12 18V22C12 29 16 36 24 38C32 36 36 29 36 22V18L24 12Z" fill="#60A5FA"/>
+                </svg>
+                <h1 class="logo-text">Silver Umbrella</h1>
+            </div>
+            <p class="tagline">Protecting You from Online Scams</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main" role="main">
+        <div class="container">
+            <!-- Introduction -->
+            <section class="intro-section" aria-labelledby="intro-heading">
+                <h2 id="intro-heading" class="intro-heading">Is This Website Safe?</h2>
+                <p class="intro-text">
+                    Received a suspicious email or text? Not sure if a website is real? 
+                    We'll check it for you in seconds.
+                </p>
+            </section>
+
+            <!-- URL Checker Card -->
+            <section class="checker-card" aria-labelledby="checker-heading">
+                <h2 id="checker-heading" class="visually-hidden">Website Safety Checker</h2>
+                
+                <!-- Input Form -->
+                <form class="checker-form" id="checkerForm" novalidate>
+                    <div class="input-group">
+                        <label for="urlInput" class="input-label">
+                            Website Address (URL)
+                        </label>
+                        <input 
+                            type="text" 
+                            id="urlInput" 
+                            class="url-input" 
+                            placeholder="Example: paypal-secure.com"
+                            aria-required="true"
+                            aria-describedby="url-hint"
+                            autocomplete="off"
+                            spellcheck="false"
+                        >
+                        <p id="url-hint" class="input-hint">
+                            Copy and paste the website address from your email or message
+                        </p>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button 
+                        type="submit" 
+                        class="analyze-button" 
+                        id="analyzeButton"
+                        aria-label="Analyze this website for safety"
+                    >
+                        <svg class="button-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                            <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span class="button-text">Analyze This Website</span>
+                    </button>
+                </form>
+
+                <!-- Loading State -->
+                <div class="loading-container" id="loadingContainer" aria-live="polite" aria-atomic="true" hidden>
+                    <div class="loading-spinner" role="status">
+                        <svg class="spinner" width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <circle class="spinner-track" cx="32" cy="32" r="28" fill="none" stroke-width="6"/>
+                            <circle class="spinner-fill" cx="32" cy="32" r="28" fill="none" stroke-width="6"/>
+                        </svg>
+                        <span class="visually-hidden">Analyzing website, please wait</span>
+                    </div>
+                    <p class="loading-text">Checking this website...</p>
+                    <p class="loading-subtext">This will only take a few seconds</p>
+                </div>
+
+                <!-- Results Section -->
+                <div class="results-container" id="resultsContainer" aria-live="polite" aria-atomic="true" hidden>
+                    <!-- Results will be inserted here by JavaScript -->
+                </div>
+            </section>
+
+            <!-- How It Works -->
+            <section class="how-it-works" aria-labelledby="how-heading">
+                <h2 id="how-heading" class="section-heading">How We Keep You Safe</h2>
+                <div class="steps-grid">
+                    <div class="step-card">
+                        <div class="step-number" aria-hidden="true">1</div>
+                        <h3 class="step-title">You Paste the Link</h3>
+                        <p class="step-description">
+                            Copy the website address from your email or message and paste it above
+                        </p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number" aria-hidden="true">2</div>
+                        <h3 class="step-title">We Analyze It</h3>
+                        <p class="step-description">
+                            Our system checks for warning signs that scammers use to trick people
+                        </p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number" aria-hidden="true">3</div>
+                        <h3 class="step-title">You Get a Clear Answer</h3>
+                        <p class="step-description">
+                            We'll tell you if it's SAFE or DANGEROUS in plain, simple language
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Trust Indicators -->
+            <section class="trust-section" aria-labelledby="trust-heading">
+                <h2 id="trust-heading" class="section-heading">Why Trust Silver Umbrella?</h2>
+                <div class="trust-grid">
+                    <div class="trust-card">
+                        <svg class="trust-icon" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <circle cx="24" cy="24" r="20" stroke="#2563EB" stroke-width="3"/>
+                            <path d="M16 24L21 29L32 18" stroke="#2563EB" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                        <h3 class="trust-title">90% Accurate</h3>
+                        <p class="trust-text">Trained on 700,000 real examples to spot scams</p>
+                    </div>
+                    <div class="trust-card">
+                        <svg class="trust-icon" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <rect x="10" y="10" width="28" height="28" rx="4" stroke="#2563EB" stroke-width="3"/>
+                            <path d="M18 24L22 28L30 20" stroke="#2563EB" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                        <h3 class="trust-title">Fast Results</h3>
+                        <p class="trust-text">Get your answer in just a few seconds</p>
+                    </div>
+                    <div class="trust-card">
+                        <svg class="trust-icon" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M24 4L6 14V22C6 33 13 43 24 46C35 43 42 33 42 22V14L24 4Z" stroke="#2563EB" stroke-width="3"/>
+                            <path d="M18 24L22 28L30 20" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round"/>
+                        </svg>
+                        <h3 class="trust-title">100% Private</h3>
+                        <p class="trust-text">We don't store your information or track you</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <p class="footer-text">
+                &copy; 2025 Silver Umbrella | Protecting Seniors from Online Scams
+            </p>
+            <p class="footer-subtext">
+                Powered by Advanced AI Security Technology
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+# ============================================================================
+# Silver Umbrella - Python Dependencies
+# ============================================================================
+
+# Core Web Framework
+flask==3.0.0                    # Web API framework
+flask-cors==4.0.0              # Allow web app to connect to API
+
+# Machine Learning & Data Science
+numpy==1.24.3                  # Numerical computing (arrays, math)
+pandas==2.0.3                  # Data manipulation (CSV handling)
+scikit-learn==1.3.0            # Machine learning (SVM model)
+
+# AI Explanations (Optional - has fallback if not installed)
+openai==1.3.0                  # OpenAI API for senior-friendly explanations
+
+# Utilities
+python-dotenv==1.0.0           # Environment variables (API keys)
