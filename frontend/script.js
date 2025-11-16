@@ -20,7 +20,7 @@ async function analyzeURL() {
         return;
     }
     
-    // Show loading
+    // Show loading process
     loading.classList.remove('hidden');
     results.classList.add('hidden');
     analyzeBtn.disabled = true;

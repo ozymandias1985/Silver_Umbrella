@@ -1,7 +1,4 @@
-"""
-Silver Umbrella - Flask Backend API
-REST API for phishing detection
-"""
+"""Silver Umbrella - Flask Backend API REST API for phishing detection"""
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -17,7 +14,7 @@ app = Flask(__name__)
 CORS(app, origins=Config.CORS_ORIGINS)
 
 # Load model on startup
-print("🔄 Loading Silver Umbrella model...")
+print("Engaging with Silver Umbrella ...")
 try:
     with open(Config.MODEL_PATH, 'rb') as f:
         model_data = pickle.load(f)
@@ -220,12 +217,12 @@ def check_url():
 
 if __name__ == '__main__':
     print(f"\n{'='*70}")
-    print(f"🛡️  SILVER UMBRELLA API SERVER")
+    print(f"SILVER UMBRELLA API SERVER")
     print(f"{'='*70}\n")
-    print(f"🚀 Starting Flask server...")
-    print(f"📡 API will be available at: http://{Config.HOST}:{Config.PORT}")
-    print(f"🔒 Rate limit: {Config.RATE_LIMIT_PER_IP} checks per IP per day")
-    print(f"🤖 Model accuracy: {model_accuracy*100:.2f}%" if model else "⚠️  Model not loaded!")
+    print(f"Starting Flask server...")
+    print(f"API will be available at: http://{Config.HOST}:{Config.PORT}")
+    print(f"Rate limit: {Config.RATE_LIMIT_PER_IP} checks per IP per day")
+    print(f"Model accuracy: {model_accuracy*100:.2f}%" if model else "⚠️  Model not loaded!")
     print(f"\n{'='*70}\n")
     
     app.run(

@@ -5,7 +5,7 @@ Silver Umbrella Backend Configuration
 import os
 from dotenv import load_dotenv
 
-# Load environment variables
+# Load env variables from .env file
 load_dotenv()
 
 class Config:

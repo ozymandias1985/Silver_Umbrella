@@ -1,6 +1,4 @@
-"""
-Silver Umbrella - Hybrid Explanation System
-"""
+"""Silver Umbrella - Hybrid Explanation System"""
 
 import openai
 from config import Config
