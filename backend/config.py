@@ -16,7 +16,7 @@ class Config:
     OPENAI_MODEL = 'gpt-3.5-turbo'
     
     # Model paths
-    MODEL_PATH = 'model/phishing_model.pkl'
+    MODEL_PATH = 'model\phishing_model.pkl'
     
     # Rate limiting
     RATE_LIMIT_ENABLED = True
