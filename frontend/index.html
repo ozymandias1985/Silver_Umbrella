@@ -1,104 +1,888 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Silver Umbrella</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Arial,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
-.container{background:white;border-radius:20px;padding:40px;max-width:600px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
-h1{text-align:center;color:#667eea;margin-bottom:10px;font-size:2.5em}
-.subtitle{text-align:center;color:#666;margin-bottom:30px}
-.input-group{display:flex;gap:10px;margin-bottom:20px}
-input{flex:1;padding:15px;border:2px solid #e0e0e0;border-radius:10px;font-size:16px}
-input:focus{outline:none;border-color:#667eea}
-button{padding:15px 30px;background:#667eea;color:white;border:none;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer}
-button:hover{background:#5568d3}
-button:disabled{opacity:0.5;cursor:not-allowed}
-.loading{text-align:center;padding:40px;display:none}
-.spinner{border:4px solid #f3f3f3;border-top:4px solid #667eea;border-radius:50%;width:50px;height:50px;animation:spin 1s linear infinite;margin:0 auto 20px}
-@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
-.results{margin-top:20px;padding:30px;border-radius:15px;display:none}
-.safe{background:#e8f5e9;border:2px solid #4caf50}
-.danger{background:#ffebee;border:2px solid #f44336}
-.result-header{display:flex;align-items:center;gap:15px;margin-bottom:20px}
-.emoji{font-size:50px}
-.verdict{font-size:2em;font-weight:bold}
-.safe-text{color:#4caf50}
-.danger-text{color:#f44336}
-.confidence{color:#666;margin-top:5px}
-.explanation{font-size:16px;line-height:1.6;color:#333;margin-bottom:20px}
-.details{background:rgba(0,0,0,0.05);padding:15px;border-radius:10px;margin-bottom:20px}
-.details h4{margin-bottom:10px;color:#333}
-.details ul{list-style:none;padding:0}
-.details li{padding:5px 0;color:#666}
-.reset-btn{width:100%;background:transparent;color:#667eea;border:2px solid #667eea}
-.reset-btn:hover{background:#667eea;color:white}
-.footer{text-align:center;margin-top:30px;color:#999;font-size:14px}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silver Umbrella | AI Phishing Protection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-card: #1a1a1a;
+            --silver: #c0c0c0;
+            --silver-light: #e8e8e8;
+            --silver-dark: #808080;
+            --silver-glow: rgba(192, 192, 192, 0.3);
+            --black: #000000;
+            --text-primary: #ffffff;
+            --text-secondary: #d0d0d0;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --border: rgba(192, 192, 192, 0.2);
+        }
+
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.8;
+            overflow-x: hidden;
+            font-size: 18px;
+        }
+
+        /* Navbar - LARGER for seniors */
+        .navbar {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid var(--silver);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .brand-logo {
+            width: 80px;
+            height: 80px;
+            filter: drop-shadow(0 0 20px var(--silver-glow));
+            flex-shrink: 0;
+        }
+
+        .brand-text {
+            font-size: 2rem;
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            color: var(--silver-light);
+            text-shadow: 0 0 30px var(--silver-glow);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            padding: 1rem 2rem;
+            color: var(--text-primary);
+            background: var(--bg-secondary);
+            border: 3px solid var(--silver);
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.25rem;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .nav-link:hover {
+            background: var(--silver-dark);
+            transform: scale(1.05);
+            box-shadow: 0 0 30px var(--silver-glow);
+        }
+
+        .nav-link.active {
+            color: var(--black);
+            background: var(--silver);
+            border-color: var(--silver-light);
+            box-shadow: 0 4px 20px var(--silver-glow);
+        }
+
+        /* Main Container */
+        .main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            min-height: calc(100vh - 200px);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero Section - LARGER TEXT */
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            color: var(--silver-light);
+            text-shadow: 0 0 40px var(--silver-glow);
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.75rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Scanner Card - LARGER INPUTS */
+        .scanner-card {
+            background: var(--bg-card);
+            border: 3px solid var(--silver);
+            border-radius: 24px;
+            padding: 4rem;
+            max-width: 1000px;
+            margin: 0 auto 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .input-zone {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .url-input {
+            flex: 1;
+            padding: 1.75rem 2rem;
+            font-size: 1.5rem;
+            font-family: inherit;
+            background: var(--bg-secondary);
+            border: 3px solid var(--silver);
+            border-radius: 16px;
+            color: var(--text-primary);
+            outline: none;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .url-input::placeholder {
+            color: var(--silver-dark);
+            font-size: 1.25rem;
+        }
+
+        .url-input:focus {
+            border-color: var(--silver-light);
+            box-shadow: 0 0 0 4px var(--silver-glow);
+            transform: scale(1.02);
+        }
+
+        .scan-button {
+            padding: 1.75rem 3.5rem;
+            font-size: 1.5rem;
+            font-weight: 900;
+            font-family: inherit;
+            background: linear-gradient(135deg, var(--silver) 0%, var(--silver-light) 100%);
+            color: var(--black);
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 6px 25px var(--silver-glow);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .scan-button:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 10px 40px var(--silver-glow);
+        }
+
+        .scan-button:active {
+            transform: translateY(-2px);
+        }
+
+        .scan-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Help Text - NEW */
+        .help-text {
+            text-align: center;
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(192, 192, 192, 0.05);
+            border-radius: 12px;
+            border: 2px dashed var(--silver-dark);
+        }
+
+        .help-text strong {
+            color: var(--silver-light);
+            font-size: 1.4rem;
+        }
+
+        /* Loading - LARGER */
+        .loading {
+            text-align: center;
+            padding: 4rem 0;
+            display: none;
+        }
+
+        .spinner {
+            width: 80px;
+            height: 80px;
+            border: 6px solid var(--bg-secondary);
+            border-top-color: var(--silver);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 2rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        /* Results - LARGER TEXT */
+        .results {
+            margin-top: 2rem;
+            padding: 3rem;
+            border-radius: 20px;
+            display: none;
+            animation: slideUp 0.4s ease;
+            border: 4px solid;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-safe {
+            background: rgba(34, 197, 94, 0.15);
+            border-color: var(--success);
+            box-shadow: 0 0 40px rgba(34, 197, 94, 0.3);
+        }
+
+        .result-danger {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: var(--danger);
+            box-shadow: 0 0 40px rgba(239, 68, 68, 0.3);
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .result-emoji {
+            font-size: 6rem;
+            flex-shrink: 0;
+        }
+
+        .result-info {
+            flex: 1;
+        }
+
+        .result-verdict {
+            font-size: 3rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .verdict-safe { color: var(--success); }
+        .verdict-danger { color: var(--danger); }
+
+        .result-confidence {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            font-weight: 700;
+        }
+
+        .result-explanation {
+            font-size: 1.5rem;
+            line-height: 2;
+            margin-bottom: 2.5rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .result-details {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2.5rem;
+            border: 2px solid var(--border);
+        }
+
+        .details-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+            color: var(--silver-light);
+        }
+
+        .details-list {
+            list-style: none;
+        }
+
+        .details-list li {
+            padding: 1rem 0;
+            padding-left: 2.5rem;
+            position: relative;
+            font-size: 1.25rem;
+            border-bottom: 1px solid var(--border);
+            line-height: 1.8;
+        }
+
+        .details-list li:last-child {
+            border-bottom: none;
+        }
+
+        .details-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--silver);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .reset-button {
+            width: 100%;
+            padding: 1.75rem;
+            font-size: 1.5rem;
+            font-weight: 900;
+            font-family: inherit;
+            background: transparent;
+            color: var(--silver-light);
+            border: 3px solid var(--silver);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .reset-button:hover {
+            background: var(--silver);
+            color: var(--black);
+            transform: scale(1.02);
+            box-shadow: 0 8px 30px var(--silver-glow);
+        }
+
+        /* About Section - LARGER TEXT */
+        .about-section, .education-section {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .about-card {
+            background: var(--bg-card);
+            border: 3px solid var(--silver);
+            border-radius: 24px;
+            padding: 3rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .about-card h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            color: var(--silver-light);
+            text-align: center;
+        }
+
+        .about-card h3 {
+            font-size: 2rem;
+            margin: 2.5rem 0 1.5rem;
+            color: var(--silver);
+            border-bottom: 2px solid var(--silver);
+            padding-bottom: 0.5rem;
+        }
+
+        .about-card p {
+            font-size: 1.35rem;
+            line-height: 2;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2.5rem 0;
+        }
+
+        .mission-item {
+            background: var(--bg-secondary);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 3px solid var(--silver);
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .mission-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--silver-glow);
+            border-color: var(--silver-light);
+        }
+
+        .mission-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .mission-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--silver-light);
+        }
+
+        .mission-text {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Example Cards - LARGER */
+        .example-card {
+            background: var(--bg-card);
+            border: 3px solid;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .example-card h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--silver-light);
+        }
+
+        .example-url {
+            background: var(--bg-secondary);
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.25rem;
+            color: var(--silver-light);
+            margin: 1.5rem 0;
+            word-break: break-all;
+            border: 2px solid var(--border);
+            font-weight: 600;
+        }
+
+        .example-safe {
+            border-color: var(--success);
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .example-danger {
+            border-color: var(--danger);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .warning-signs {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .warning-signs li {
+            padding: 1.25rem 0;
+            padding-left: 3rem;
+            position: relative;
+            color: var(--text-secondary);
+            font-size: 1.35rem;
+            line-height: 1.8;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .warning-signs li:last-child {
+            border-bottom: none;
+        }
+
+        .warning-signs li::before {
+            content: '⚠️';
+            position: absolute;
+            left: 0;
+            font-size: 1.75rem;
+        }
+
+        .warning-signs strong {
+            color: var(--silver-light);
+            font-size: 1.4rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-secondary);
+            border-top: 2px solid var(--silver);
+            padding: 2.5rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            font-size: 1.25rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .brand-logo {
+                width: 60px;
+                height: 60px;
+            }
+
+            .brand-text {
+                font-size: 1.5rem;
+            }
+
+            .nav-links {
+                gap: 0.5rem;
+            }
+
+            .nav-link {
+                padding: 0.75rem 1.25rem;
+                font-size: 1rem;
+            }
+
+            .input-zone {
+                flex-direction: column;
+            }
+
+            .scan-button {
+                width: 100%;
+            }
+
+            .mission-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .result-emoji {
+                font-size: 4rem;
+            }
+
+            .result-verdict {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-<h1>🛡️ Silver Umbrella</h1>
-<p class="subtitle">AI-Powered Phishing Detection</p>
-<div class="input-group">
-<input type="text" id="urlInput" placeholder="Enter URL (e.g., google.com)">
-<button id="checkBtn">Check</button>
-</div>
-<div id="loading" class="loading">
-<div class="spinner"></div>
-<p>Analyzing...</p>
-</div>
-<div id="results" class="results"></div>
-<div class="footer">86% Accuracy • 800K+ URLs • 100% Private</div>
-</div>
-<script>
-const API='http://localhost:5000';
-const input=document.getElementById('urlInput');
-const btn=document.getElementById('checkBtn');
-const loading=document.getElementById('loading');
-const results=document.getElementById('results');
-btn.onclick=check;
-input.onkeypress=(e)=>{if(e.key==='Enter')check();};
-async function check(){
-const url=input.value.trim();
-if(!url){alert('Enter a URL');return;}
-loading.style.display='block';
-results.style.display='none';
-btn.disabled=true;
-try{
-const res=await fetch(`${API}/api/check-url`,{
-method:'POST',
-headers:{'Content-Type':'application/json'},
-body:JSON.stringify({url})
-});
-const data=await res.json();
-show(data);
-}catch(err){
-results.className='results danger';
-results.innerHTML='<div class="result-header"><div class="emoji">⚠️</div><div><div class="verdict danger-text">Error</div></div></div><div class="explanation">Cannot connect to backend. Make sure it is running on port 5000.</div><button class="reset-btn" onclick="reset()">Try Again</button>';
-results.style.display='block';
-}finally{
-loading.style.display='none';
-btn.disabled=false;
-}
-}
-function show(data){
-const safe=data.prediction==='legitimate';
-results.className=`results ${safe?'safe':'danger'}`;
-let detailsHTML='';
-if(data.details&&data.details.length){
-detailsHTML=`<div class="details"><h4>${safe?'Good Signs:':'Warning Signs:'}</h4><ul>${data.details.map(d=>`<li>• ${d}</li>`).join('')}</ul></div>`;
-}
-results.innerHTML=`<div class="result-header"><div class="emoji">${data.emoji}</div><div><div class="verdict ${safe?'safe-text':'danger-text'}">${data.verdict}</div><div class="confidence">Confidence: ${data.confidence_percent}%</div></div></div><div class="explanation">${data.explanation}</div>${detailsHTML}<button class="reset-btn" onclick="reset()">Check Another URL</button>`;
-results.style.display='block';
-}
-function reset(){
-input.value='';
-results.style.display='none';
-input.focus();
-}
-</script>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="brand">
+                <img src="logo.png" alt="Silver Umbrella Logo" class="brand-logo" id="logo">
+                <span class="brand-text">SILVER UMBRELLA</span>
+            </div>
+            <ul class="nav-links">
+                <li class="nav-link active" data-tab="scanner">🔍 Scanner</li>
+                <li class="nav-link" data-tab="about">ℹ️ About</li>
+                <li class="nav-link" data-tab="education">📚 Learn</li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main">
+        <!-- Scanner Tab -->
+        <div id="scanner" class="tab-content active">
+            <div class="hero">
+                <h1 class="hero-title">Is This Link Safe?</h1>
+                <p class="hero-subtitle">Let us check it for you in seconds</p>
+            </div>
+
+            <div class="scanner-card">
+                <div class="input-zone">
+                    <input 
+                        type="text" 
+                        id="urlInput" 
+                        class="url-input" 
+                        placeholder="Paste the link here..."
+                    >
+                    <button id="scanBtn" class="scan-button">Check Now</button>
+                </div>
+
+                <div class="help-text">
+                    <strong>💡 How to use:</strong> Copy the suspicious link from your email or text message, paste it in the box above, and click "Check Now"
+                </div>
+
+                <div id="loading" class="loading">
+                    <div class="spinner"></div>
+                    <p class="loading-text">Checking if this link is safe...</p>
+                </div>
+
+                <div id="results" class="results"></div>
+            </div>
+        </div>
+
+        <!-- About Tab -->
+        <div id="about" class="tab-content">
+            <div class="about-section">
+                <div class="about-card">
+                    <h2>About Silver Umbrella</h2>
+                    <p>
+                        Silver Umbrella protects you from dangerous links that try to steal your personal information. We use advanced computer technology to check if a link is safe or dangerous - in just seconds.
+                    </p>
+
+                    <h3>Our Mission</h3>
+                    <p>
+                        We believe everyone deserves to be safe online, no matter their age or computer skills. Our goal is to protect seniors from scammers who send fake emails and text messages with dangerous links.
+                    </p>
+
+                    <div class="mission-grid">
+                        <div class="mission-item">
+                            <div class="mission-icon">🛡️</div>
+                            <div class="mission-title">Highly Accurate</div>
+                            <div class="mission-text">We correctly identify 86 out of every 100 dangerous links</div>
+                        </div>
+                        <div class="mission-item">
+                            <div class="mission-icon">👴</div>
+                            <div class="mission-title">Easy to Use</div>
+                            <div class="mission-text">Simple language, large text, clear instructions</div>
+                        </div>
+                        <div class="mission-item">
+                            <div class="mission-icon">🔒</div>
+                            <div class="mission-title">100% Private</div>
+                            <div class="mission-text">We never save or share the links you check</div>
+                        </div>
+                    </div>
+
+                    <h3>How It Works</h3>
+                    <p>
+                        Our system was trained by analyzing over 800,000 websites - both safe and dangerous. It learned patterns that scammers use to trick people. When you paste a link, our system checks 25 different things about it and tells you if it's safe or dangerous.
+                    </p>
+
+                    <h3>Why "Silver Umbrella"?</h3>
+                    <p>
+                        Just like an umbrella protects you from rain, Silver Umbrella protects you from online scams. The "silver" represents our commitment to protecting seniors - the silver generation.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Education Tab -->
+        <div id="education" class="tab-content">
+            <div class="education-section">
+                <div class="about-card">
+                    <h2>Understanding Dangerous Links</h2>
+                    <p>
+                        Scammers send fake emails and text messages that look real. These messages contain dangerous links that can steal your passwords, bank information, or personal details. Learning to spot them is important!
+                    </p>
+                </div>
+
+                <div class="example-card example-safe">
+                    <h3>✅ Examples of SAFE Links</h3>
+                    <div class="example-url">https://www.amazon.com</div>
+                    <div class="example-url">https://www.google.com</div>
+                    <div class="example-url">https://www.facebook.com</div>
+                    <p style="color: var(--text-secondary); margin-top: 1.5rem; font-size: 1.35rem;">
+                        These links are from real, trusted companies. They use "https" (the "s" means secure) and have simple, recognizable names.
+                    </p>
+                </div>
+
+                <div class="example-card example-danger">
+                    <h3>🚨 Examples of DANGEROUS Links</h3>
+                    <div class="example-url">http://paypal-verify-account.suspicious-site.ru</div>
+                    <div class="example-url">https://www.faceb00k-security-check.com</div>
+                    <div class="example-url">http://192.168.1.1/amazon-login.html</div>
+                    <p style="color: var(--text-secondary); margin-top: 1.5rem; font-size: 1.35rem;">
+                        These links look similar to real websites but have suspicious patterns. Scammers create these to steal your information.
+                    </p>
+                </div>
+
+                <div class="about-card">
+                    <h3>⚠️ Warning Signs - What to Look For</h3>
+                    <ul class="warning-signs">
+                        <li><strong>Misspelled words:</strong> "faceb00k" instead of "facebook" (zero instead of letter O)</li>
+                        <li><strong>Strange endings:</strong> .ru, .tk, or unusual country codes instead of .com</li>
+                        <li><strong>Numbers instead of names:</strong> Like "192.168.1.1" - real companies use names, not numbers</li>
+                        <li><strong>Too many dots or dashes:</strong> paypal.verify.login.account.com has too many parts</li>
+                        <li><strong>Missing the padlock:</strong> URLs should start with "https" not "http" (no S)</li>
+                        <li><strong>Urgent messages:</strong> "Verify NOW!" or "Account will be closed!" creates panic</li>
+                        <li><strong>Too many dashes:</strong> verify-your-account-now-click-here.com looks suspicious</li>
+                        <li><strong>Wrong letters:</strong> amaz0n, g00gle, micr0soft use zeros instead of O's</li>
+                    </ul>
+                </div>
+
+                <div class="about-card">
+                    <h3>🎯 How to Stay Safe Online</h3>
+                    <p><strong>1. Never click links in unexpected emails or texts</strong><br>If you didn't request it, don't click it. Scammers send millions of fake messages.</p>
+                    <p><strong>2. Type the website address yourself</strong><br>Instead of clicking the link, open your browser and type the company's website yourself.</p>
+                    <p><strong>3. Look for the padlock icon</strong><br>Real websites show a padlock icon next to the address. No padlock = not secure.</p>
+                    <p><strong>4. Use Silver Umbrella first</strong><br>When in doubt, paste the link here and let us check it for you!</p>
+                    <p><strong>5. Trust your gut feeling</strong><br>If something feels wrong or too urgent, it probably is a scam.</p>
+                    <p><strong>6. Call the company directly</strong><br>If you get a message claiming to be from your bank, call them using the number on your bank card - NOT the number in the message.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p class="footer-text">© 2025 Silver Umbrella • Protecting You from Online Scams • AI-Powered Security</p>
+    </footer>
+
+    <script>
+        const API = 'http://localhost:5000';
+        const urlInput = document.getElementById('urlInput');
+        const scanBtn = document.getElementById('scanBtn');
+        const loading = document.getElementById('loading');
+        const results = document.getElementById('results');
+
+        // Tab switching
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+
+                const tabId = link.getAttribute('data-tab');
+                document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Logo fallback
+        document.getElementById('logo').onerror = function() {
+            console.log('Logo not found at logo.png');
+            this.style.display = 'none';
+        };
+
+        scanBtn.addEventListener('click', scanURL);
+        urlInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') scanURL();
+        });
+
+        async function scanURL() {
+            const url = urlInput.value.trim();
+            if (!url) {
+                alert('Please paste a link in the box first');
+                return;
+            }
+
+            loading.style.display = 'block';
+            results.style.display = 'none';
+            scanBtn.disabled = true;
+
+            try {
+                const response = await fetch(`${API}/api/check-url`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url })
+                });
+
+                const data = await response.json();
+                showResults(data);
+            } catch (error) {
+                showError('Cannot connect to our checking system. Please make sure the backend is running.');
+            } finally {
+                loading.style.display = 'none';
+                scanBtn.disabled = false;
+            }
+        }
+
+        function showResults(data) {
+            const isSafe = data.prediction === 'legitimate';
+            results.className = 'results';
+            results.classList.add(isSafe ? 'result-safe' : 'result-danger');
+
+            let detailsHTML = '';
+            if (data.details && data.details.length > 0) {
+                detailsHTML = `
+                    <div class="result-details">
+                        <div class="details-title">${isSafe ? 'Why This Link is Safe' : 'Why This Link is Dangerous'}</div>
+                        <ul class="details-list">
+                            ${data.details.map(d => `<li>${d}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            results.innerHTML = `
+                <div class="result-header">
+                    <div class="result-emoji">${data.emoji}</div>
+                    <div class="result-info">
+                        <div class="result-verdict ${isSafe ? 'verdict-safe' : 'verdict-danger'}">
+                            ${data.verdict}
+                        </div>
+                        <div class="result-confidence">We are ${data.confidence_percent}% confident</div>
+                    </div>
+                </div>
+                <div class="result-explanation">${data.explanation}</div>
+                ${detailsHTML}
+                <button class="reset-button" onclick="reset()">Check Another Link</button>
+            `;
+            results.style.display = 'block';
+            results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function showError(message) {
+            results.className = 'results result-danger';
+            results.innerHTML = `
+                <div class="result-header">
+                    <div class="result-emoji">⚠️</div>
+                    <div class="result-info">
+                        <div class="result-verdict verdict-danger">System Error</div>
+                    </div>
+                </div>
+                <div class="result-explanation">${message}</div>
+                <button class="reset-button" onclick="reset()">Try Again</button>
+            `;
+            results.style.display = 'block';
+        }
+
+        function reset() {
+            urlInput.value = '';
+            results.style.display = 'none';
+            urlInput.focus();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Auto-focus input on page load
+        window.addEventListener('load', () => urlInput.focus());
+    </script>
 </body>
 </html>
