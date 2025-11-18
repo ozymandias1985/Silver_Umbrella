@@ -1,87 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silver Umbrella - AI Phishing Detection</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Silver Umbrella</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.container{background:white;border-radius:20px;padding:40px;max-width:600px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+h1{text-align:center;color:#667eea;margin-bottom:10px;font-size:2.5em}
+.subtitle{text-align:center;color:#666;margin-bottom:30px}
+.input-group{display:flex;gap:10px;margin-bottom:20px}
+input{flex:1;padding:15px;border:2px solid #e0e0e0;border-radius:10px;font-size:16px}
+input:focus{outline:none;border-color:#667eea}
+button{padding:15px 30px;background:#667eea;color:white;border:none;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer}
+button:hover{background:#5568d3}
+button:disabled{opacity:0.5;cursor:not-allowed}
+.loading{text-align:center;padding:40px;display:none}
+.spinner{border:4px solid #f3f3f3;border-top:4px solid #667eea;border-radius:50%;width:50px;height:50px;animation:spin 1s linear infinite;margin:0 auto 20px}
+@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.results{margin-top:20px;padding:30px;border-radius:15px;display:none}
+.safe{background:#e8f5e9;border:2px solid #4caf50}
+.danger{background:#ffebee;border:2px solid #f44336}
+.result-header{display:flex;align-items:center;gap:15px;margin-bottom:20px}
+.emoji{font-size:50px}
+.verdict{font-size:2em;font-weight:bold}
+.safe-text{color:#4caf50}
+.danger-text{color:#f44336}
+.confidence{color:#666;margin-top:5px}
+.explanation{font-size:16px;line-height:1.6;color:#333;margin-bottom:20px}
+.details{background:rgba(0,0,0,0.05);padding:15px;border-radius:10px;margin-bottom:20px}
+.details h4{margin-bottom:10px;color:#333}
+.details ul{list-style:none;padding:0}
+.details li{padding:5px 0;color:#666}
+.reset-btn{width:100%;background:transparent;color:#667eea;border:2px solid #667eea}
+.reset-btn:hover{background:#667eea;color:white}
+.footer{text-align:center;margin-top:30px;color:#999;font-size:14px}
+</style>
 </head>
 <body>
-    <div class="app">
-        <!-- Hero Section -->
-        <header class="hero">
-            <div class="container">
-                <div class="hero-content">
-                    <img src="logo.png" alt="Silver Umbrella" class="logo" onerror="this.style.display='none'">
-                    <h1 class="title">Silver Umbrella</h1>
-                    <p class="subtitle">AI-Powered Protection Against Online Scams</p>
-                </div>
-            </div>
-        </header>
-
-        <!-- Main Scanner -->
-        <main class="main">
-            <div class="container">
-                <div class="scanner">
-                    <h2 class="scanner-title">Is This Website Safe?</h2>
-                    <p class="scanner-desc">Paste any suspicious link below. Our AI will analyze it instantly.</p>
-                    
-                    <div class="input-group">
-                        <input 
-                            type="text" 
-                            id="urlInput" 
-                            class="url-input" 
-                            placeholder="https://example.com"
-                            spellcheck="false"
-                            autocomplete="off"
-                        >
-                        <button id="analyzeBtn" class="analyze-btn">
-                            <span class="btn-text">Analyze URL</span>
-                            <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="11" cy="11" r="8"/>
-                                <path d="m21 21-4.35-4.35"/>
-                            </svg>
-                        </button>
-                    </div>
-
-                    <div id="loading" class="loading hidden">
-                        <div class="spinner"></div>
-                        <p>Analyzing website...</p>
-                    </div>
-
-                    <div id="results" class="results hidden"></div>
-                </div>
-
-                <!-- Info Cards -->
-                <div class="info-grid">
-                    <div class="info-card">
-                        <div class="card-icon">🛡️</div>
-                        <h3>AI-Powered</h3>
-                        <p>Trained on 800,000+ URLs with 86% accuracy</p>
-                    </div>
-                    <div class="info-card">
-                        <div class="card-icon">⚡</div>
-                        <h3>Instant Results</h3>
-                        <p>Get your answer in seconds, not minutes</p>
-                    </div>
-                    <div class="info-card">
-                        <div class="card-icon">🔒</div>
-                        <h3>100% Private</h3>
-                        <p>We don't store or track your searches</p>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p>&copy; 2025 Silver Umbrella | Protecting You from Online Scams</p>
-        </footer>
-    </div>
-
-    <script src="script.js"></script>
+<div class="container">
+<h1>🛡️ Silver Umbrella</h1>
+<p class="subtitle">AI-Powered Phishing Detection</p>
+<div class="input-group">
+<input type="text" id="urlInput" placeholder="Enter URL (e.g., google.com)">
+<button id="checkBtn">Check</button>
+</div>
+<div id="loading" class="loading">
+<div class="spinner"></div>
+<p>Analyzing...</p>
+</div>
+<div id="results" class="results"></div>
+<div class="footer">86% Accuracy • 800K+ URLs • 100% Private</div>
+</div>
+<script>
+const API='http://localhost:5000';
+const input=document.getElementById('urlInput');
+const btn=document.getElementById('checkBtn');
+const loading=document.getElementById('loading');
+const results=document.getElementById('results');
+btn.onclick=check;
+input.onkeypress=(e)=>{if(e.key==='Enter')check();};
+async function check(){
+const url=input.value.trim();
+if(!url){alert('Enter a URL');return;}
+loading.style.display='block';
+results.style.display='none';
+btn.disabled=true;
+try{
+const res=await fetch(`${API}/api/check-url`,{
+method:'POST',
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({url})
+});
+const data=await res.json();
+show(data);
+}catch(err){
+results.className='results danger';
+results.innerHTML='<div class="result-header"><div class="emoji">⚠️</div><div><div class="verdict danger-text">Error</div></div></div><div class="explanation">Cannot connect to backend. Make sure it is running on port 5000.</div><button class="reset-btn" onclick="reset()">Try Again</button>';
+results.style.display='block';
+}finally{
+loading.style.display='none';
+btn.disabled=false;
+}
+}
+function show(data){
+const safe=data.prediction==='legitimate';
+results.className=`results ${safe?'safe':'danger'}`;
+let detailsHTML='';
+if(data.details&&data.details.length){
+detailsHTML=`<div class="details"><h4>${safe?'Good Signs:':'Warning Signs:'}</h4><ul>${data.details.map(d=>`<li>• ${d}</li>`).join('')}</ul></div>`;
+}
+results.innerHTML=`<div class="result-header"><div class="emoji">${data.emoji}</div><div><div class="verdict ${safe?'safe-text':'danger-text'}">${data.verdict}</div><div class="confidence">Confidence: ${data.confidence_percent}%</div></div></div><div class="explanation">${data.explanation}</div>${detailsHTML}<button class="reset-btn" onclick="reset()">Check Another URL</button>`;
+results.style.display='block';
+}
+function reset(){
+input.value='';
+results.style.display='none';
+input.focus();
+}
+</script>
 </body>
 </html>
