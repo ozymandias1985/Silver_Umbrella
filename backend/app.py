@@ -6,6 +6,7 @@ import re
 from urllib.parse import urlparse
 from datetime import datetime
 from config import Config, rate_limit_store
+from explainer import ExplanationGenerator
 
 app = Flask(__name__)
 CORS(app, origins=Config.CORS_ORIGINS)
